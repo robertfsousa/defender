@@ -59,6 +59,7 @@ class Defender implements DefenderContract
      */
     public function getUser()
     {
+        dd('asd');
         return $this->app['defender.auth']->user();
     }
 
