@@ -52,4 +52,15 @@ class Role extends Model
             'user_id'
         );
     }
+
+    /**
+     * Many-to-many role-restaurant_user relationship.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function restaurant_users()
+    {
+        return $this->belongsToMany('Artesaos\Defender\RestaurantUser')->withPivot('value', 'expires');
+    }
+
 }

@@ -2,7 +2,7 @@
 
 namespace Artesaos\Defender\Providers;
 
-use App\RestaurantUser;
+
 use Artesaos\Defender\Role;
 use Artesaos\Defender\Defender;
 use Artesaos\Defender\Javascript;

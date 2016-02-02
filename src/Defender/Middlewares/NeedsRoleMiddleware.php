@@ -17,6 +17,7 @@ class NeedsRoleMiddleware extends AbstractDefenderMiddleware
      */
     public function handle($request, Closure $next, $roles = null, $any = false)
     {
+
         if (is_null($roles)) {
             $roles = $this->getRoles($request);
             $anyRole = $this->getAny($request);

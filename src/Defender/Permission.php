@@ -2,6 +2,7 @@
 
 namespace Artesaos\Defender;
 
+use Artesaos\Defender\Pivots\PermissionRestaurantUserPivot;
 use Illuminate\Database\Eloquent\Model;
 use Artesaos\Defender\Pivots\PermissionRolePivot;
 use Artesaos\Defender\Pivots\PermissionUserPivot;
@@ -64,6 +65,16 @@ class Permission extends Model
     }
 
     /**
+     * Many-to-many permission-restaurant_user relationship.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function restaurant_users()
+    {
+        return $this->belongsToMany('Artesaos\Defender\RestaurantUser')->withPivot('value', 'expires');
+    }
+
+    /**
      * @param Model  $parent
      * @param array  $attributes
      * @param string $table
@@ -73,11 +84,17 @@ class Permission extends Model
      */
     public function newPivot(Model $parent, array $attributes, $table, $exists)
     {
+
         $userModel = app()['config']->get('auth.model');
         $roleModel = app()['config']->get('defender.role_model');
+        $restaurantUserModel = app()['config']->get('defender.restaurant_user');
 
         if ($parent instanceof $userModel) {
             return new PermissionUserPivot($parent, $attributes, $table, $exists);
+        }
+
+        if ($parent instanceof $restaurantUserModel) {
+            return new PermissionRestaurantUserPivot($parent, $attributes, $table, $exists);
         }
 
         if ($parent instanceof $roleModel) {

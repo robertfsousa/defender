@@ -12,6 +12,7 @@ use Artesaos\Defender\Contracts\Repositories\PermissionRepository;
  */
 class Defender implements DefenderContract
 {
+
     /**
      * The Laravel Application.
      *
@@ -41,12 +42,13 @@ class Defender implements DefenderContract
     /**
      * Class constructor.
      *
-     * @param Application          $app
-     * @param RoleRepository       $roleRepository
+     * @param Application $app
+     * @param RoleRepository $roleRepository
      * @param PermissionRepository $permissionRepository
      */
     public function __construct(Application $app, RoleRepository $roleRepository, PermissionRepository $permissionRepository)
     {
+
         $this->app = $app;
         $this->roleRepository = $roleRepository;
         $this->permissionRepository = $permissionRepository;
@@ -59,7 +61,14 @@ class Defender implements DefenderContract
      */
     public function getUser()
     {
-        dd('asd');
+        if ($this->app['request']->segment(1) === 'admin') {
+            $user = $this->app['defender.auth']->user();
+
+            //$restaurant_user = $this->app['defender.restauran_user'];
+            return $user->restaurant_users()->where('restaurant_id', $user->restaurant_last->id)->first();
+
+        }
+
         return $this->app['defender.auth']->user();
     }
 
@@ -67,13 +76,13 @@ class Defender implements DefenderContract
      * Check if the authenticated user has the given permission.
      *
      * @param string $permission
-     * @param bool   $force
+     * @param bool $force
      *
      * @return bool
      */
     public function hasPermission($permission, $force = false)
     {
-        if (! is_null($this->getUser())) {
+        if (!is_null($this->getUser())) {
             return $this->getUser()->hasPermission($permission, $force);
         }
 
@@ -84,13 +93,13 @@ class Defender implements DefenderContract
      * Check if the authenticated user has the given permission.
      *
      * @param string $permission
-     * @param bool   $force
+     * @param bool $force
      *
      * @return bool
      */
     public function canDo($permission, $force = false)
     {
-        if (! is_null($this->getUser())) {
+        if (!is_null($this->getUser())) {
             return $this->getUser()->canDo($permission, $force);
         }
 
@@ -102,13 +111,13 @@ class Defender implements DefenderContract
      * using only the roles.
      *
      * @param string $permission
-     * @param bool   $force
+     * @param bool $force
      *
      * @return bool
      */
     public function roleHasPermission($permission, $force = false)
     {
-        if (! is_null($this->getUser())) {
+        if (!is_null($this->getUser())) {
             return $this->getUser()->roleHasPermission($permission, $force);
         }
 
@@ -124,7 +133,7 @@ class Defender implements DefenderContract
      */
     public function hasRole($roleName)
     {
-        if (! is_null($this->getUser())) {
+        if (!is_null($this->getUser())) {
             return $this->getUser()->hasRole($roleName);
         }
 
@@ -140,7 +149,7 @@ class Defender implements DefenderContract
      */
     public function hasRoles($roles)
     {
-        if (! is_null($this->getUser())) {
+        if (!is_null($this->getUser())) {
             return $this->getUser()->hasRoles($roles);
         }
 
@@ -280,7 +289,7 @@ class Defender implements DefenderContract
      */
     public function javascript()
     {
-        if (! $this->javascript) {
+        if (!$this->javascript) {
             $this->javascript = new Javascript($this);
         }
 
