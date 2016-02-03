@@ -273,7 +273,7 @@ class Defender implements DefenderContract
      */
     public function createRole($roleName, $readableName = null, $type = null)
     {
-        return $this->roleRepository->create($roleName, $readableName, $type = null);
+        return $this->roleRepository->create($roleName, $readableName, $type);
     }
 
     /**
