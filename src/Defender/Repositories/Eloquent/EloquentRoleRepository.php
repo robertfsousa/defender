@@ -33,7 +33,7 @@ class EloquentRoleRepository extends AbstractEloquentRepository implements RoleR
      *
      * @return Role
      */
-    public function create($roleName, $readableName = null, $type = null)
+    public function create($roleName, $readableName = null, $type = 'business')
     {
         if (!is_null($this->findByName($roleName))) {
             // TODO: add translation support

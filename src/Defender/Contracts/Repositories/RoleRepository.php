@@ -18,5 +18,5 @@ interface RoleRepository extends AbstractRepository
      *
      * @return \Artesaos\Defender\Role
      */
-    public function create($roleName, $readableName = null, $type = null);
+    public function create($roleName, $readableName = null, $type = 'business');
 }
