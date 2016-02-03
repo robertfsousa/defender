@@ -267,12 +267,13 @@ class Defender implements DefenderContract
      *
      * @param string $roleName
      * @param string $readableName
+     * @param string $type
      *
      * @return \Artesaos\Defender\Role
      */
-    public function createRole($roleName, $readableName = null)
+    public function createRole($roleName, $readableName = null, $type = null)
     {
-        return $this->roleRepository->create($roleName, $readableName);
+        return $this->roleRepository->create($roleName, $readableName, $type = null);
     }
 
     /**
