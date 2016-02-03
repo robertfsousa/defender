@@ -64,9 +64,10 @@ class Defender implements DefenderContract
         if ($this->app['request']->segment(1) === 'admin') {
             $user = $this->app['defender.auth']->user();
 
-            //$restaurant_user = $this->app['defender.restauran_user'];
-            return $user->restaurant_users()->where('restaurant_id', $user->restaurant_last->id)->first();
-
+            if ($user) {
+                //$restaurant_user = $this->app['defender.restauran_user'];
+                return $user->restaurant_users()->where('restaurant_id', $user->restaurant_last->id)->first();
+            }
         }
 
         return $this->app['defender.auth']->user();

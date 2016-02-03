@@ -44,7 +44,7 @@ class Role extends Model
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function users()
-    { 
+    {
         return $this->belongsToMany(
             config('auth.model'),
             config('defender.role_user_table'),
