@@ -51,7 +51,7 @@ class RestaurantUser extends Model
 
     public function getRolesStrAttribute()
     {
-        return $this->roles->implode('name', ', ');
+        return $this->roles->implode('readable_name', ', ');
     }
 
 

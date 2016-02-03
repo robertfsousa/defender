@@ -12,9 +12,10 @@ use Artesaos\Defender\Contracts\Repositories\RoleRepository;
  */
 class EloquentRoleRepository extends AbstractEloquentRepository implements RoleRepository
 {
+
     /**
      * @param Application $app
-     * @param Role        $model
+     * @param Role $model
      */
     public function __construct(Application $app, Role $model)
     {
@@ -25,18 +26,26 @@ class EloquentRoleRepository extends AbstractEloquentRepository implements RoleR
      * Create a new role with the given name.
      *
      * @param $roleName
+     * @param string $readableName
      *
      * @throws \Exception
      *
      * @return Role
      */
-    public function create($roleName)
+    public function create($roleName, $readableName = null)
     {
-        if (! is_null($this->findByName($roleName))) {
+        if (!is_null($this->findByName($roleName))) {
             // TODO: add translation support
             throw new RoleExistsException('A role with the given name already exists');
         }
 
-        return $role = $this->model->create(['name' => $roleName]);
+        // Do we have a display_name set?
+        $readableName = is_null($readableName) ? $roleName : $readableName;
+
+        return $role = $this->model->create([
+            'name'          => $roleName,
+            'readable_name' => $readableName
+        ]);
+
     }
 }
