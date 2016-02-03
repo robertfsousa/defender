@@ -51,7 +51,7 @@ class RestaurantUser extends Model
 
     public function getRolesStrAttribute()
     {
-        return $this->roles->implode('readable_name', ', ');
+        return $this->roles()->whereNotIn('name',['client'])->get(['readable_name'])->implode('readable_name', ', ');
     }
 
 
