@@ -49,4 +49,10 @@ class RestaurantUser extends Model
         )->withPivot('value', 'expires');
     }
 
+    public function getRolesStrAttribute()
+    {
+        return $this->roles->implode('name', ', ');
+    }
+
+
 }
