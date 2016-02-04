@@ -3,6 +3,7 @@
 namespace Artesaos\Defender\Providers;
 
 
+use Artesaos\Defender\Repositories\Eloquent\EloquentRestaurantUserRepository;
 use Artesaos\Defender\Role;
 use Artesaos\Defender\Defender;
 use Artesaos\Defender\Javascript;
@@ -108,7 +109,9 @@ class DefenderServiceProvider extends ServiceProvider
 
 
         $this->app->singleton('defender.restaurant_user', function ($app) {
-            return new EloquentUserRepository($app, new RestaurantUser());
+            $restaurantUserModel = $app['config']->get('defender.restaurant_user_model', 'App\RestaurantUser');
+            return new EloquentRestaurantUserRepository($app, $app->make($restaurantUserModel));
+            //return new EloquentUserRepository($app, new RestaurantUser());
         });
 
         $this->app->singleton('Artesaos\Defender\Contracts\Repositories\RestaurantUserRepository', function ($app) {

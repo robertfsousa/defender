@@ -62,7 +62,9 @@ class Role extends Model
      */
     public function restaurant_users()
     {
-        return $this->belongsToMany('Artesaos\Defender\RestaurantUser')->withPivot('value', 'expires');
+        return $this->belongsToMany(
+            config('defender.restaurant_user_model')
+        )->withPivot('value', 'expires');
     }
 
 }

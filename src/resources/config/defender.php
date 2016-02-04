@@ -7,6 +7,11 @@
 return [
 
     /*
+     * Default RestaurantUser model used by Defender.
+     */
+    'restaurant_user_model' => 'App\RestaurantUser',
+
+    /*
      * Default Role model used by Defender.
      */
     'role_model' => Artesaos\Defender\Role::class,
