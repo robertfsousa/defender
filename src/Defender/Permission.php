@@ -71,7 +71,7 @@ class Permission extends Model
      */
     public function restaurant_users()
     {
-        
+
         return $this->belongsToMany(
             config('defender.restaurant_user_model')
         )->withPivot('value', 'expires');

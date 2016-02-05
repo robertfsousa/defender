@@ -2,10 +2,10 @@
 
 namespace Artesaos\Defender;
 
-use Illuminate\Contracts\Foundation\Application;
-use Artesaos\Defender\Contracts\Repositories\RoleRepository;
 use Artesaos\Defender\Contracts\Defender as DefenderContract;
 use Artesaos\Defender\Contracts\Repositories\PermissionRepository;
+use Artesaos\Defender\Contracts\Repositories\RoleRepository;
+use Illuminate\Contracts\Foundation\Application;
 
 /**
  * Class Defender.
@@ -64,9 +64,12 @@ class Defender implements DefenderContract
         if ($this->app['request']->segment(1) === 'admin') {
             $user = $this->app['defender.auth']->user();
 
-            if ($user) {
+            if ($user && $restaurant_last = $user->restaurant_last) {
+
+                $user->restaurant_users()->where('restaurant_id', $restaurant_last->id)->first();
+
                 //$restaurant_user = $this->app['defender.restauran_user'];
-                return $user->restaurant_users()->where('restaurant_id', $user->restaurant_last->id)->first();
+                return $user->restaurant_users()->where('restaurant_id', $restaurant_last->id)->first();
             }
         }
 
